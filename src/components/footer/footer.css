@@ -1,0 +1,47 @@
+.footer {
+  padding: 4.8rem 0 9.6rem 0;
+  border-top: 2px solid var(--textColor-gen-lighter-translucent);
+  font-family: 'Rubik', sans-serif;
+}
+
+.copyright {
+  font-size: var(--fs-14);
+  line-height: 1.6;
+  margin-top: auto;
+}
+
+.footer-heading {
+  font-size: var(--fs-18);
+  font-weight: 500;
+  margin-bottom: 4rem;
+}
+
+.contacts {
+  font-style: normal;
+  font-size: var(--fs-16);
+  line-height: 1.6;
+}
+
+.address {
+  margin-bottom: 2.4rem;
+}
+
+.footer-nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.footer-link:link,
+.footer-link:visited {
+  text-decoration: none;
+  font-size: var(--fs-16);
+  transition: all 0.3s;
+  color: var(--textColor-gen);
+}
+
+.footer-link:hover,
+.footer-link:active {
+  color: #767676;
+}

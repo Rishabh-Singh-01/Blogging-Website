@@ -1,0 +1,133 @@
+.profile {
+  padding: 6.4rem 0;
+  position: relative;
+  font-family: 'Rubik', serif;
+}
+
+.profile-main {
+  display: flex;
+  gap: 4.8rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.profile-main-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  flex-grow: 1;
+  letter-spacing: 0.05rem;
+  margin-bottom: 9.6rem;
+}
+
+.profile-main-details-username {
+  font-size: var(--fs-36);
+  color: var(--textColor-gen-dark);
+  font-weight: 600;
+  font-family: 'Rubik', serif;
+}
+
+.profile-main-details-desc {
+  line-height: 1.4;
+  font-family: 'Source Serif Pro', serif;
+}
+
+.profile-pic-cont {
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: var(--mainColor-translucent);
+  border-radius: 50%;
+}
+
+.profile-main-picture {
+  max-width: 9.6rem;
+  height: 9.6rem;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.settings-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4.8rem;
+}
+
+.settings-title {
+  font-size: var(--fs-36);
+  font-weight: 600;
+  color: var(--textColor-gen-lighter);
+}
+
+.settings-deleteBtn {
+  border-radius: 5rem;
+  font-size: var(--fs-14);
+  color: var(--white);
+  padding: 1rem 2rem;
+  background-color: hsl(12, 73%, 50%);
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3.2rem;
+}
+
+.profilePic-update {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: fit-content;
+  background-color: var(--textColor-gen-lighter-translucent);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.profilePic-update > i {
+  font-size: var(--fs-24);
+  color: var(--textColor-gen-dark);
+}
+
+.settings-form > input {
+  width: 100%;
+  padding: 1rem;
+  font-size: var(--fs-20);
+  color: var(--textColor-gen-darker);
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  border: 1rem solid var(--white);
+  font-family: 'Rubik', serif;
+  border-radius: 1rem;
+}
+
+.settings-form > input:focus {
+  outline: none;
+  border: 1rem solid var(--mainColor-translucent);
+}
+
+.profile-btn {
+  font-family: 'Rubik', serif;
+  width: fit-content;
+  align-self: center;
+  border-radius: 10rem;
+  font-size: var(--fs-20);
+  font-weight: 500;
+  color: var(--white);
+  padding: 1rem 2rem;
+  background-color: var(--mainColor);
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+}

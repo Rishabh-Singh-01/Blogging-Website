@@ -1,0 +1,66 @@
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Rubik', serif;
+  font-size: var(--fs-18);
+  font-weight: 600;
+  padding: 2.4rem 9.6rem;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid var(--textColor-general);
+  background-color: var(--mainColor-light);
+  z-index: 9999;
+}
+.navBar-middle {
+  display: inline;
+  width: fit-content;
+}
+.navBar-middle-list {
+  list-style: none;
+  display: flex;
+  gap: 3.2rem;
+}
+
+.navBar-middle-list > li {
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.navBar-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+.navBar-right-img-cont {
+  display: flex;
+}
+
+.navBar-right-img {
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.navBar-right > i {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.userLogoutStartingBtn {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  height: 3.6rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  background-color: var(--mainColor);
+  color: var(--white);
+  cursor: pointer;
+}

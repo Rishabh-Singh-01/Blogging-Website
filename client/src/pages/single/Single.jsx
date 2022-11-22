@@ -1,28 +1,41 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from './../../components/sidebar/Sidebar';
 import './single.css';
 import DOMPurify from 'dompurify';
+import AuthContext from '../../context/AuthContext';
 
 const Single = () => {
-  const getText = (html) => {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    return doc.body.textContent;
-  };
-
+  const authContextInstance = useContext(AuthContext);
+  const { user } = authContextInstance.userLogInfo;
   const [post, setPost] = useState({});
   const location = useLocation();
   const postId = location.pathname.split('/')[2];
+  const navigate = useNavigate();
   useEffect(() => {
     (async () => {
       const res = await axios.get(`/posts/${postId}`);
       const { post } = res.data.data;
-      console.log(post);
       setPost(post);
     })();
   }, [postId]);
+
+  const updatePostHandler = () => {
+    console.log(post);
+  };
+
+  const deletePostHandler = async () => {
+    try {
+      const res = await axios.delete(`/posts/${postId}`);
+      console.log(res);
+      if (res.status === 204) navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className='single'>
       <div className='single-main container'>
@@ -45,10 +58,22 @@ const Single = () => {
           />
           <div className='single-main-post-titleBox'>
             <span className='single-main-post-title'>{post.title}</span>
-            <div className='single-main-post-titleBox-icons'>
-              <i className='fa-solid fa-pen-to-square'></i>
-              <i className='fa-regular fa-trash-can'></i>
-            </div>
+            {user?.username === post.username ? (
+              <div className='single-main-post-titleBox-icons'>
+                <Link className='link' to={`/write?edit=2`} state={post}>
+                  <i
+                    className='fa-solid fa-pen-to-square updatePostBtn'
+                    onClick={updatePostHandler}
+                  ></i>
+                </Link>
+                <i
+                  className='fa-regular fa-trash-can deletePostBtn'
+                  onClick={deletePostHandler}
+                ></i>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
           <p
             className='single-main-post-desc'

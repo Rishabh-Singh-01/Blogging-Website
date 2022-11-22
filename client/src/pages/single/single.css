@@ -67,11 +67,11 @@
   font-size: var(--fs-24);
 }
 
-.single-main-post-titleBox-icons > i:first-child {
+.updatePostBtn {
   color: teal;
   cursor: pointer;
 }
-.single-main-post-titleBox-icons > i:last-child {
+.deletePostBtn {
   color: tomato;
   cursor: pointer;
 }

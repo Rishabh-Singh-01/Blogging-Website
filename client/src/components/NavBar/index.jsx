@@ -34,12 +34,12 @@ export default () => {
             </Link>
           </li>
           <li>
-            <Link className='link' to='/'>
-              Contact
+            <Link className='link' to='/posts'>
+              Search
             </Link>
           </li>
           <li>
-            <Link className='link' to='/write'>
+            <Link className='link' to='/write' state={null}>
               Write
             </Link>
           </li>
@@ -68,7 +68,6 @@ export default () => {
             <span className='userLogoutStartingBtn'>Start Writing</span>
           </Link>
         )}
-        {/* <i className='fa-solid fa-magnifying-glass'></i> */}
       </div>
     </div>
   );

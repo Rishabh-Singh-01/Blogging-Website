@@ -64,6 +64,7 @@ const Login = () => {
             autoFocus
             onChange={loginEmailHandler}
             value={email}
+            autoComplete='off'
           />
           <div className='registerForm-passwordContainer'>
             <input
@@ -72,6 +73,7 @@ const Login = () => {
               placeholder='Password'
               onChange={loginPasswordHandler}
               value={password}
+              autoComplete='off'
             />
             <i
               className={`registerForm-passwordEye fa-sharp fa-solid ${iconEyeType}`}

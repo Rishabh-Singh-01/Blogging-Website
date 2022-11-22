@@ -11,6 +11,7 @@ import Single from './pages/single/Single';
 import AuthContext from './context/AuthContext';
 import { useContext, useEffect } from 'react';
 import axios from 'axios';
+import SearchedPosts from './pages/searchedPosts/SearchedPosts';
 
 const App = () => {
   const authContextInstance = useContext(AuthContext);
@@ -51,6 +52,7 @@ const App = () => {
           <Route path='/login' element={loggedIn ? <Home /> : <Login />} />
           <Route path='/write' element={loggedIn ? <Write /> : <Login />} />
           <Route path='/profile' element={loggedIn ? <Profile /> : <Login />} />
+          <Route path='/posts' element={<SearchedPosts />} />
           <Route path='/posts/:postId' element={<Single />} />
         </Routes>
         <Footer />

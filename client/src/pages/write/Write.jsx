@@ -1,31 +1,40 @@
 import axios from 'axios';
 import { useContext } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import './write.css';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const Write = () => {
-  const [value, setValue] = useState(''); // for react quill
+  const stateEditPost = useLocation().state;
+  const [writeTitle, setWriteTitle] = useState(stateEditPost?.title || '');
+  const [value, setValue] = useState(stateEditPost?.description || ''); // for react quill description
   const navigate = useNavigate();
   const authContextInstance = useContext(AuthContext);
-  const [writeTitle, setWriteTitle] = useState('');
-  const [writeDescription, setWriteDescription] = useState('');
+  // const [writeDescription, setWriteDescription] = useState('');
 
   const writeFormSubmitHandler = async (e) => {
     e.preventDefault();
     const { user } = authContextInstance.userLogInfo;
-    console.log(writeTitle);
+    // console.log();
     try {
-      const res = await axios.post('/posts', {
-        username: user.username,
-        title: writeTitle,
-        description: value,
-      });
+      let res;
+      console.log(stateEditPost);
+      stateEditPost
+        ? (res = await axios.put(`/posts/${stateEditPost._id}`, {
+            username: stateEditPost.username,
+            title: writeTitle,
+            description: value,
+          }))
+        : (res = await axios.post('/posts', {
+            username: user.username,
+            title: writeTitle,
+            description: value,
+          }));
+
       const { status, data } = res.data;
-      console.log(res.data);
       if (status === 'success') {
         navigate(`/posts/${data.post._id}`);
       }

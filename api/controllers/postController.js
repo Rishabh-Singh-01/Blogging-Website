@@ -6,7 +6,15 @@ const catchAsync = require('../utils/catchAsync');
 
 exports.getAllPostsController = catchAsync(async (req, res, next) => {
   let query = Post.find();
+  // sorting for latest post
   query = query.sort('-updatedAt');
+
+  // looking for any search item
+  if (req.query.search) {
+    const searchItem = req.query.search;
+    query = await Post.find({ title: { $regex: searchItem, $options: 'i' } });
+  }
+
   const posts = await query;
   res.status(200).json({
     status: 'success',

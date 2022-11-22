@@ -1,0 +1,59 @@
+.searchedPosts {
+  padding: 6.4rem 0;
+  position: relative;
+}
+
+.searchedPosts-main-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchedPosts-main-top > form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-family: 'Rubik', sans-serif;
+}
+
+.searchBox-btn {
+  font-size: var(--fs-20);
+  background-color: #4da6a6;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  padding: 1rem;
+}
+
+.searchBox {
+  font-size: var(--fs-18);
+  padding: 1rem 2rem;
+  width: 30rem;
+  border: none;
+  border-radius: 1rem;
+  border: 0.5rem solid var(--white);
+  background-color: var(--textColor-gen-lighter-translucent);
+  color: var(--textColor-dark);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  font-family: inherit;
+}
+
+.searchBox::placeholder {
+  color: var(--textColor-gen-light);
+  opacity: 0.9;
+}
+
+.searchBox:focus {
+  outline: none;
+  border: 0.5rem solid var(--mainColor-translucent);
+}
+.searchedPosts-main-postList {
+  position: relative;
+}

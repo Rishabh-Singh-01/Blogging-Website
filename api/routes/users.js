@@ -4,11 +4,19 @@ const {
   updateDataController,
   deleteAccountController,
   getUserController,
+  uploadUserPhoto,
+  resizeUserPhoto,
 } = require('../controllers/userController');
 const router = express.Router();
 
 // UPDATE THE DATA
-router.patch('/update-my-data', protectController, updateDataController);
+router.patch(
+  '/update-my-data',
+  protectController,
+  uploadUserPhoto,
+  resizeUserPhoto,
+  updateDataController
+);
 
 // DELETE THE ACCOUNT
 router.delete('/delete-my-account', protectController, deleteAccountController);

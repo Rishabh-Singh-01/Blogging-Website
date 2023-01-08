@@ -112,22 +112,35 @@
 }
 
 .settings-form > input {
+  font-size: var(--fs-20);
   width: 100%;
   padding: 1rem;
-  font-size: var(--fs-20);
+  border-radius: 1rem;
   color: var(--textColor-gen-darker);
   line-height: 1.4;
   letter-spacing: 0.5px;
   border: 1rem solid var(--white);
   font-family: 'Rubik', serif;
-  border-radius: 1rem;
 }
 
-.settings-form > input:focus {
+.settings-form > textarea {
+  font-size: var(--fs-20);
+  width: 100%;
+  height: 50rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  color: var(--textColor-gen-darker);
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  border: 1rem solid var(--white);
+  font-family: 'Rubik', serif;
+}
+
+.settings-form > input:focus,
+.settings-form > textarea:focus {
   outline: none;
   border: 1rem solid var(--mainColor-translucent);
 }
-
 .profile-btn {
   font-family: 'Rubik', serif;
   width: fit-content;

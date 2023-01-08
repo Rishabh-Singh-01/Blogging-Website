@@ -13,15 +13,27 @@ const PostSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      default: '',
+      default: 'default.jpg',
     },
     username: {
+      type: String,
+      required: true,
+    },
+    userProfilePicture: {
+      type: String,
+      default: 'default.jpg',
+    },
+    userEmail: {
       type: String,
       required: true,
     },
     categories: {
       type: Array,
       required: false,
+    },
+    likes: {
+      type: Array,
+      default: [],
     },
   },
   { timestamps: true }

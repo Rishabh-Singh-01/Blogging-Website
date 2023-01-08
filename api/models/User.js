@@ -34,9 +34,15 @@ const UserSchema = new mongoose.Schema(
         message: 'Passwords do not match !!!',
       },
     },
+    aboutme: {
+      type: String,
+      required: false,
+      default:
+        'This is by default ..... Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti rem dolore modi non fuga quo magni ut est aut sequi tempora, quam maxime inventore praesentium, aperiam aliquam quisquam maiores illum Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti rem dolore modi non fuga quo magni ut est aut sequi tempora, quam maxime inventore praesentium, aperiam aliquam quisquam maiores illum Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti rem dolore modi non fuga quo magni ut est aut sequi tempora, quam maxime inventore praesentium, aperiam aliquam quisquam maiores illum!',
+    },
     profilePic: {
       type: String,
-      default: '',
+      default: 'default.jpg',
     },
   },
   { timestamps: true }

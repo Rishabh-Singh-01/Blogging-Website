@@ -89,7 +89,7 @@ const Login = () => {
           Sign up and discover a new passion for life and find the joy in
           inspiring others !!!!
         </p>
-        <Link className='link' to='/register'>
+        <Link className='link' to='/signup'>
           <button className='sideWrapperBtn' type='submit'>
             Sign Up
           </button>

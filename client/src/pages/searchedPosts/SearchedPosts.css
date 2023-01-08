@@ -1,6 +1,7 @@
 .searchedPosts {
   padding: 6.4rem 0;
   position: relative;
+  min-height: fit-content;
 }
 
 .searchedPosts-main-top {
@@ -34,7 +35,7 @@
 .searchBox {
   font-size: var(--fs-18);
   padding: 1rem 2rem;
-  width: 30rem;
+  width: calc(40rem - 1rem - 1rem - var(--fs-20) - 0.5rem);
   border: none;
   border-radius: 1rem;
   border: 0.5rem solid var(--white);
@@ -56,4 +57,5 @@
 }
 .searchedPosts-main-postList {
   position: relative;
+  min-height: fit-content;
 }

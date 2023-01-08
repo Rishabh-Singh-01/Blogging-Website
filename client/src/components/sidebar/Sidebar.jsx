@@ -1,3 +1,4 @@
+import Footer from '../footer/footer';
 import './sidebar.css';
 
 const Sidebar = () => {
@@ -6,25 +7,17 @@ const Sidebar = () => {
       <div className='sidebar-discover'>
         <span>Discover what you like the most</span>
         <ul className='sidebar-discover-list'>
-          <li>Writing</li>
           <li>Technology</li>
-          <li>Productivity</li>
-          <li>Creativity</li>
+          <li>Lifestyle</li>
+          <li>Business</li>
           <li>Programming</li>
-          <li>Life</li>
+          <li>Fashion</li>
+          <li>Travelling</li>
           <li>Spirituality</li>
-          <li>Self Improvement</li>
+          <li>Politics</li>
         </ul>
       </div>
-      <div className='sidebar-follow'>
-        <span>Follow me :</span>
-        <div className='sidebar-follow-icon'>
-          <i className='fa-brands fa-instagram'></i>
-          <i className='fa-brands fa-facebook'></i>
-          <i className='fa-brands fa-twitter'></i>
-          <i className='fa-brands fa-pinterest'></i>
-        </div>
-      </div>
+      <Footer />
     </aside>
   );
 };

@@ -1,37 +1,85 @@
 import './profile.css';
 import Sidebar from './../../components/sidebar/Sidebar';
+import { useContext } from 'react';
+import AuthContext from '../../context/AuthContext';
+import { useState } from 'react';
+import axios from 'axios';
+
+// ,
+//     userEmail: {
+//       type: String,
+//       required: true,
+//     },
 
 const Profile = () => {
+  const PUBLIC_URL_IMG_USERS = 'http://localhost:3000/api/v1/img/users/';
+
+  const authContextInstance = useContext(AuthContext);
+  const { user } = authContextInstance.userLogInfo;
+  console.log(user);
+
+  const [settingsUsername, setSettingsUsername] = useState('');
+  // const [settingsEmail, setSettingsEmail] = useState('');
+  const [settingsAboutMe, setSettingsAboutMe] = useState('');
+  const [settingsUserProfilePic, setSettingsUserProfilePic] = useState(null);
+
+  const submitSettingsProfileHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (
+        settingsUsername === '' &&
+        // settingsEmail === '' &&
+        settingsAboutMe === '' &&
+        settingsUserProfilePic === null
+      ) {
+        throw new Error(
+          'Please fill atleast one form field from profile section!!'
+        );
+      }
+
+      const form = new FormData();
+      form.append('username', settingsUsername || user.username);
+      form.append('email', user.email);
+      form.append('aboutme', settingsAboutMe || user.aboutme);
+      if (settingsUserProfilePic) {
+        form.append('photo', settingsUserProfilePic);
+      }
+
+      const res = await axios.patch('users/update-my-data', form);
+      const { user: resUser } = res.data.data;
+      if (res.data.status === 'success') {
+        console.log(resUser);
+        authContextInstance.updateUserLogInfo(true, resUser);
+        // to reaload the whole page
+        window.location.reload();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+    setSettingsUsername('');
+    // setSettingsEmail('');
+    setSettingsAboutMe('');
+    setSettingsUserProfilePic(null);
+  };
   return (
     <div className='profile'>
       <div className='container'>
         <div className='profile-main specialContainerWrapper'>
           <div className='profile-main-details'>
             <span className='profile-main-details-username'>
-              Alexandra Watson
+              {user.username}
             </span>
-            <p className='profile-main-details-desc'>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti
-              rem dolore modi non fuga quo magni ut est aut sequi tempora, quam
-              maxime inventore praesentium, aperiam aliquam quisquam maiores
-              illum!
-              <br />
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti
-              rem dolore modi non fuga quo magni ut est aut sequi tempora, quam
-              maxime inventore praesentium, aperiam aliquam quisquam maiores
-              illum!
-              <br />
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti
-              rem dolore modi non fuga quo magni ut est aut sequi tempora, quam
-              maxime inventore praesentium, aperiam aliquam quisquam maiores
-              illum!
-            </p>
+            <p className='profile-main-details-desc'>{user.aboutme}</p>
           </div>
           <div className='profile-pic-cont'>
             <img
               className='profile-main-picture'
-              src='https://media.istockphoto.com/id/1324877086/photo/portrait-beautiful-young-woman-with-clean-fresh-skin.jpg?s=612x612&w=0&k=20&c=j_gQlG9owLn23HFGpnL6DhauOHHuVG2wcmZhnH75lqs='
-              alt='women face'
+              src={`${PUBLIC_URL_IMG_USERS}${
+                user?.profilePic || 'default.jpg'
+              }`}
+              alt={`User ${user.username} Profile`}
             />
           </div>
         </div>
@@ -40,7 +88,10 @@ const Profile = () => {
             <span className='settings-title'>Update your Account ...</span>
             <span className='settings-deleteBtn'>Delete Account</span>
           </div>
-          <form className='settings-form'>
+          <form
+            className='settings-form'
+            onSubmit={submitSettingsProfileHandler}
+          >
             <label className='profilePic-update' htmlFor='inputProfilePicture'>
               <span>Upload Picture</span>
               <i className='fa-solid fa-image-portrait'></i>
@@ -49,10 +100,26 @@ const Profile = () => {
               type='file'
               id='inputProfilePicture'
               style={{ display: 'none' }}
+              onChange={(e) => setSettingsUserProfilePic(e.target.files[0])}
             />
-            <input type='text' placeholder='Username' autoFocus />
-            <input type='Email' placeholder='Email' />
-
+            <input
+              type='text'
+              placeholder={user.username}
+              onChange={(e) => setSettingsUsername(e.target.value)}
+              value={settingsUsername}
+              autoFocus
+            />
+            {/* <input
+              type='Email'
+              placeholder={user.email}
+              onChange={(e) => setSettingsEmail(e.target.value)}
+              value={settingsEmail}
+            /> */}
+            <textarea
+              placeholder={user.aboutme}
+              onChange={(e) => setSettingsAboutMe(e.target.value)}
+              value={settingsAboutMe}
+            />
             <button className='profile-btn'>Update Profile</button>
           </form>
           <span className='settings-heading-password'>

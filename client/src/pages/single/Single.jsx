@@ -2,29 +2,36 @@ import axios from 'axios';
 import { useContext, useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Sidebar from './../../components/sidebar/Sidebar';
 import './single.css';
 import DOMPurify from 'dompurify';
 import AuthContext from '../../context/AuthContext';
+import SidebarAuthor from '../../components/sidebarAuthor/SidebarAuthor';
 
 const Single = () => {
+  const PUBLIC_URL_IMG_POSTS = 'http://localhost:3000/api/v1/img/posts/';
+  const PUBLIC_URL_IMG_USERS = 'http://localhost:3000/api/v1/img/users/';
   const authContextInstance = useContext(AuthContext);
   const { user } = authContextInstance.userLogInfo;
   const [post, setPost] = useState({});
   const location = useLocation();
+  const [postLiked, setPostLiked] = useState(false);
+  const [postLikeCount, setPostLikeCount] = useState(0);
   const postId = location.pathname.split('/')[2];
   const navigate = useNavigate();
+
   useEffect(() => {
     (async () => {
       const res = await axios.get(`/posts/${postId}`);
       const { post } = res.data.data;
+      console.log(post);
       setPost(post);
     })();
   }, [postId]);
 
-  const updatePostHandler = () => {
-    console.log(post);
-  };
+  useEffect(() => {
+    setPostLiked(post.likes?.includes(user._id));
+    setPostLikeCount(post.likes?.length);
+  }, [user._id, post.likes]);
 
   const deletePostHandler = async () => {
     try {
@@ -36,13 +43,28 @@ const Single = () => {
     }
   };
 
+  const updateLikeHandler = async () => {
+    const res = await axios.patch(`/posts/${postId}/like`, {
+      userId: user._id,
+    });
+    const { postLikes } = res.data.data;
+    console.log(res.data);
+    if (res.data.status === 'success') {
+      setPostLiked(!postLiked);
+      setPostLikeCount(postLikes);
+      console.log(postLikes);
+    }
+  };
+
   return (
     <div className='single'>
       <div className='single-main container'>
         <div className='single-main-extra specialContainerWrapper'>
           <img
-            src='https://media.istockphoto.com/id/1324877086/photo/portrait-beautiful-young-woman-with-clean-fresh-skin.jpg?s=612x612&w=0&k=20&c=j_gQlG9owLn23HFGpnL6DhauOHHuVG2wcmZhnH75lqs='
-            alt='women face'
+            src={`${PUBLIC_URL_IMG_USERS}${
+              post.userProfilePicture || 'default.jpg'
+            }`}
+            alt={`User ${post.username} Profile`}
           />
           <div className='single-main-extra-details'>
             <span className='single-main-author'>{post.username}</span>
@@ -50,21 +72,29 @@ const Single = () => {
               {new Date(post.updatedAt).toDateString()}
             </span>
           </div>
+          <div className='single-main-extra-appreciation'>
+            <i
+              className={`fa-${
+                postLiked === true ? 'solid' : 'regular'
+              } fa-heart`}
+              onClick={updateLikeHandler}
+            ></i>
+            <span>{postLikeCount} </span>
+            {/* <i class='fa-regular fa-comment'></i> */}
+          </div>
         </div>
         <div className='single-main-post specialContainerWrapper'>
           <img
-            src='https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=600'
+            src={`${PUBLIC_URL_IMG_POSTS}${post.photo || 'default.jpg'}`}
+            // src='https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&w=600'
             alt='beautiful landscape'
           />
           <div className='single-main-post-titleBox'>
             <span className='single-main-post-title'>{post.title}</span>
-            {user?.username === post.username ? (
+            {user.email === post.userEmail ? (
               <div className='single-main-post-titleBox-icons'>
                 <Link className='link' to={`/write?edit=2`} state={post}>
-                  <i
-                    className='fa-solid fa-pen-to-square updatePostBtn'
-                    onClick={updatePostHandler}
-                  ></i>
+                  <i className='fa-solid fa-pen-to-square updatePostBtn'></i>
                 </Link>
                 <i
                   className='fa-regular fa-trash-can deletePostBtn'
@@ -85,7 +115,7 @@ const Single = () => {
           ></p>
         </div>
       </div>
-      <Sidebar />
+      <SidebarAuthor post={post} />
     </div>
   );
 };

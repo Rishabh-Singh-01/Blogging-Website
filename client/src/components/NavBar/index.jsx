@@ -6,8 +6,9 @@ import './index.css';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
+  const PUBLIC_URL_IMG_USERS = 'http://localhost:3000/api/v1/img/users/';
   const authContextInstance = useContext(AuthContext);
-  const { loggedIn } = authContextInstance.userLogInfo;
+  const { user, loggedIn } = authContextInstance.userLogInfo;
 
   const logOutHandler = async () => {
     try {
@@ -59,13 +60,13 @@ export default () => {
           <Link className='link navBar-right-img-cont' to='/profile'>
             <img
               className='navBar-right-img'
-              src='https://media.istockphoto.com/id/1324877086/photo/portrait-beautiful-young-woman-with-clean-fresh-skin.jpg?s=612x612&w=0&k=20&c=j_gQlG9owLn23HFGpnL6DhauOHHuVG2wcmZhnH75lqs='
+              src={`${PUBLIC_URL_IMG_USERS}${user.profilePic || 'default.jpg'}`}
               alt='woman face'
             />
           </Link>
         ) : (
           <Link className='link' to='/login'>
-            <span className='userLogoutStartingBtn'>Start Writing</span>
+            <span className='userStartingBtn'>Start Writing</span>
           </Link>
         )}
       </div>

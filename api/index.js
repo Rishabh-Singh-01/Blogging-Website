@@ -8,6 +8,11 @@ const authRoute = require('./routes/auth');
 const userRoute = require('./routes/users');
 const postRoute = require('./routes/postRoutes');
 const cors = require('cors');
+const path = require('path');
+// ///// ANIME START. ..............................................
+// const fetch = require('node-fetch');
+// globalThis.fetch = fetch;
+// ///// ANIME END...............................................
 const corsOptions = {
   origin: 'http://localhost:3001',
   credentials: true, //access-control-allow-credentials:true
@@ -36,9 +41,31 @@ mongoose
 
 // API ROUTING STARTS HERE
 
+// ///// ANIME START. ..............................................
+// app.get('/api/v1/anime', async (req, res) => {
+//   const response = await fetch(
+//     'https://api.consumet.org/anime/gogoanime/watch/boruto-naruto-next-generations-episode-3',
+//     {
+//       method: 'GET',
+//     }
+//   );
+//   const some = await response.json();
+
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       anime: some,
+//     },
+//   });
+// });
+
+// ///// ANIME END...............................................
+
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/users', authRoute);
 app.use('/api/v1/posts', postRoute);
+// below one serves static file
+app.use('/api/v1/img', express.static(path.join(__dirname, 'public/img')));
 
 app.all('*', (req, res, next) => {
   const err = new Error(`Can't find ${req.originalUrl} on this server`);

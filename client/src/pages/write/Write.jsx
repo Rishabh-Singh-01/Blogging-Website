@@ -8,32 +8,41 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 const Write = () => {
+  const PUBLIC_URL_IMG_POSTS = 'http://localhost:3000/api/v1/img/posts/';
   const stateEditPost = useLocation().state;
   const [writeTitle, setWriteTitle] = useState(stateEditPost?.title || '');
   const [value, setValue] = useState(stateEditPost?.description || ''); // for react quill description
   const navigate = useNavigate();
   const authContextInstance = useContext(AuthContext);
   // const [writeDescription, setWriteDescription] = useState('');
+  const [settingsPostPic, setSettingsPostPic] = useState(null);
+  const [category, setCategory] = useState('Technology');
 
   const writeFormSubmitHandler = async (e) => {
     e.preventDefault();
     const { user } = authContextInstance.userLogInfo;
-    // console.log();
+    console.log(user);
     try {
       let res;
-      console.log(stateEditPost);
+      const form = new FormData();
+      form.append(
+        'username',
+        stateEditPost ? stateEditPost.username : user.username
+      );
+      form.append('title', writeTitle);
+      form.append('description', value);
+      form.append('userProfilePicture', user.profilePic);
+      form.append('userEmail', user.email);
+      form.append('categories', category);
+      if (settingsPostPic) {
+        form.append('photo', settingsPostPic);
+      }
       stateEditPost
-        ? (res = await axios.put(`/posts/${stateEditPost._id}`, {
-            username: stateEditPost.username,
-            title: writeTitle,
-            description: value,
-          }))
-        : (res = await axios.post('/posts', {
-            username: user.username,
-            title: writeTitle,
-            description: value,
-          }));
+        ? (res = await axios.put(`/posts/${stateEditPost._id}`, form))
+        : (res = await axios.post('/posts', form));
+      console.log('//////////////////////////////////////////');
 
+      console.log('dat');
       const { status, data } = res.data;
       if (status === 'success') {
         navigate(`/posts/${data.post._id}`);
@@ -47,7 +56,10 @@ const Write = () => {
     <div className='write container'>
       <img
         className='writeImg'
-        src='https://images.pexels.com/photos/2775196/pexels-photo-2775196.jpeg?auto=compress&cs=tinysrgb&w=600'
+        src={`${PUBLIC_URL_IMG_POSTS}${
+          stateEditPost === null ? 'default.jpg' : stateEditPost.photo
+        }`}
+        // src='https://images.pexels.com/photos/2775196/pexels-photo-2775196.jpeg?auto=compress&cs=tinysrgb&w=600'
         alt='beautiful scene'
       />
       <form className='writeForm' onSubmit={writeFormSubmitHandler}>
@@ -55,7 +67,12 @@ const Write = () => {
           <label htmlFor='fileInput' className='writeFormGroupIconCont'>
             <i className='fa-solid fa-image'></i>
           </label>
-          <input type='file' id='fileInput' style={{ display: 'none' }} />
+          <input
+            type='file'
+            id='fileInput'
+            style={{ display: 'none' }}
+            onChange={(e) => setSettingsPostPic(e.target.files[0])}
+          />
           <input
             type='text'
             placeholder='Title'
@@ -65,24 +82,34 @@ const Write = () => {
             value={writeTitle}
           />
         </div>
-        <div className='writeFormGroup'>
-          {/* <textarea
-            placeholder='Tell your Story ...'
-            typeof='text'
-            className='writeInput writeText'
-            onChange={(e) => setWriteDescription(e.target.value)}
-            value={writeDescription}
-          /> */}
-          <ReactQuill
-            theme='snow'
-            value={value}
-            onChange={setValue}
-            className='reactQuill'
-          />
+        <ReactQuill
+          theme='snow'
+          value={value}
+          onChange={setValue}
+          className='reactQuill'
+        />
+        <div className='writeSubmitBtnsCont'>
+          <div className='writeCategory'>
+            <label htmlFor='categories'>Category:</label>
+            <select
+              name='categories'
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value='Technology'>Technology</option>
+              <option value='Lifestyle'>Lifestyle</option>
+              <option value='Business'>Business</option>
+              <option value='Programming'>Programming</option>
+              <option value='Fashion'>Fashion</option>
+              <option value='Travelling'>Travelling</option>
+              <option value='Spirituality'>Spirituality</option>
+              <option value='Politics'>Politics</option>
+            </select>
+          </div>
+          <button className='writeSubmitBtn' type='submit'>
+            Publish
+          </button>
         </div>
-        <button className='writeSubmitBtn' type='submit'>
-          Publish
-        </button>
       </form>
     </div>
   );
